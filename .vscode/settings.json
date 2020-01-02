@@ -1,0 +1,16 @@
+{
+    "liveServer.settings.port": 5502
+
+
+    
+    // if(a.includes(td[i].innerText)){
+    //     alert("重複囉")
+    //     console.log(a)
+    // }else{
+        
+    //     addNumber(td[i].innerText);
+    //     a.push(td[i].innerText)
+    //     console.log(a)   
+    // }
+    
+}

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        td:not(#input) {
+            cursor: pointer;
+
+        }
+
+        body {
+            background: #fec3b7;
+            overflow: hidden;
+        }
+
+        table {
+            background-image: linear-gradient(to top, #f38569 5%, #ee7072 40%, #ee7471 55%, #e43d68 90%);
+            border-width: 0px;
+            position: relative;
+            top: 100px;
+            left: 700px;
+
+
+
+        }
+
+        td:not(#input) {
+            cursor: pointer;
+            text-align: center;
+            /* rgba透明化不會影響子元素 */
+            background: rgba(255, 255, 255, 0.1);
+
+        }
+
+        td {
+            width: 100px;
+            height: 100px;
+            font-size: 40px;
+            color: white;
+
+        }
+
+        #input {
+
+            font-size: 30px;
+            width: 300px;
+            height: 50px;
+
+        }
+
+        #history {
+            box-sizing: border-box;
+            padding-top: 50px;
+            height: 100px;
+            font-size: 50px;
+
+            top: 100px;
+            left: 700px;
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <table border="0" cellpadding="0" cellspacing="3">
+        <tr>
+            <td colspan="4" style="background:unset; text-align:right; cursor:none;" id='input'></td>
+        </tr>
+        <tr>
+            <td colspan="4" id='history' style="background:unset; text-align:right; cursor:none;"></td>
+        </tr>
+        <tr>
+            <td>c</td>
+            <td>/</td>
+            <td>*</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td rowspan="2">+</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td rowspan="2">=</td>
+        </tr>
+        <tr>
+            <td colspan="2">0</td>
+            <td id='ds'>.</td>
+        </tr>
+    </table>
+
+
+
+
+    <script>
+
+        let input = document.getElementById('input');
+        let td = document.getElementsByTagName("td");
+        let history = document.getElementById('history');
+
+        let operator = ["+", "-", "*", "/", "Enter", "."];
+        for (let i = 0; i < td.length; i++) {
+
+            // 不是螢幕就可以點擊
+            if (td[i].id != "input") {
+                td[i].onclick = function () {
+                    addNumber(td[i].innerText);
+                }
+            }
+        }
+
+        document.onkeydown = function (event) {
+            // 按得字
+            let key = event.key;
+
+            //  isnan 不是數字的話   !isnan 是數字
+            if (!isNaN(key) || operator.includes(key)) {
+                addNumber(key);
+            }
+        }
+
+        let addNumber = function (number) {
+
+            if (input.innerText.length < 12) {
+                if (number == "c") {
+                    input.innerText = "0";
+                }
+                else if (number == "=" || number == "Enter") {
+                    history.innerText = eval(input.innerText);
+
+                }
+                else {
+                    if (input.innerText == "0") {
+                        if(number == "+" ||number == "-" || number == "*" || number == "/"){
+                            input.innerText = 0;
+                        }else if(number != "."){
+                            input.innerText = number;
+                        }else{   
+                            input.innerText += number;
+                        }
+                    }
+                    else {
+                        if (operator.includes(number)) {
+                            if (operator.includes(input.innerText.substring(input.innerText.length - 1))) {
+                                let str = input.innerText.substring(0, input.innerText.length - 1);
+                                input.innerText = str + number;
+                            } else {
+                                input.innerText += number;
+
+                            }
+                        } else {
+                            input.innerText += number;
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+    </script>
+</body>
+
+</html>
